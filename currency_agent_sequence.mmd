@@ -1,0 +1,20 @@
+sequenceDiagram
+    participant User
+    participant Agent
+    participant Tool
+    participant EventQueue
+    
+    User->>Agent: Currency conversion query
+    Agent->>EventQueue: "Looking up exchange rates..."
+    Agent->>Tool: get_exchange_rate()
+    Tool-->>Agent: Exchange rate data
+    Agent->>EventQueue: "Processing exchange rates..."
+    Agent->>Agent: Generate structured response
+    
+    alt Response: completed
+        Agent->>EventQueue: Final conversion result
+    else Response: input_required
+        Agent->>EventQueue: Request for more info
+    else Response: error
+        Agent->>EventQueue: Error message
+    end 

@@ -1,2 +1,2 @@
-a2a-sdk>=latest
-uvicorn>=latest
+a2a-sdk>=0.2.4
+uvicorn>=0.34.0

@@ -1,0 +1,36 @@
+graph TD
+    開始([開始]) --> AI[AIエージェント<br/>ChatGoogleGenerativeAI<br/>gemini-2.0-flash]
+    
+    AI --> ツール判定{ツール呼び出し?}
+    
+    ツール判定 -->|はい| ツール実行[ツール実行<br/>get_exchange_rate<br/>為替レート取得]
+    ツール判定 -->|いいえ| レスポンス確認{レスポンス<br/>フォーマット確認}
+    
+    ツール実行 --> ツール結果[ツールメッセージ<br/>為替レートデータ]
+    ツール結果 --> AI
+    
+    レスポンス確認 -->|入力必要| 入力要求[入力要求<br/>追加情報が必要]
+    レスポンス確認 -->|エラー| エラー状態[エラー状態<br/>エラーメッセージ表示]
+    レスポンス確認 -->|完了| タスク完了[タスク完了<br/>最終結果表示]
+    
+    入力要求 --> 終了([終了])
+    エラー状態 --> 終了
+    タスク完了 --> 終了
+    
+    %% スタイリング
+    classDef startEnd fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef agent fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef tool fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef decision fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef state fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    
+    class 開始 startEnd
+    class 終了 startEnd
+    class AI agent
+    class ツール実行 tool
+    class ツール結果 tool
+    class ツール判定 decision
+    class レスポンス確認 decision
+    class 入力要求 state
+    class エラー状態 state
+    class タスク完了 state
